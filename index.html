@@ -2,10 +2,47 @@
     td {
         width: 50px;
         height: 50px;
-        border: 1px solid black;
+        border: 2px solid black;
         font-size: 2rem;
         text-align: center;
+        border-style: dashed;
     }
+
+    table {
+        border-collapse: collapse;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    table tr:nth-of-type(3n + 1) td {
+        border-top-style: solid;
+    }
+    
+    table tr:nth-of-type(3n + 3) td {
+        border-bottom-style: solid;
+    }
+
+    table tr td:nth-of-type(3n + 3) {
+        border-right-style: solid;
+    }
+
+    table tr td:nth-of-type(3n + 4) {
+        border-left-style: solid;
+    }
+    
+
+    table tr td:first-of-type {
+        border-left-style: solid;
+    }
+
+    table tr td:last-of-type {
+        border-right-style: solid;
+    }
+
+    table tr:last-of-type td {
+        border-bottom-style: solid;
+    }
+    
 
     .invalid {
         border: 2px solid inherit;
@@ -29,6 +66,10 @@
         border: 1px solid #ced4da;
         border-radius: 0.25rem;
         flex: 1 1 auto;
+    }
+
+    .form .input.invalid {
+        border: 1px solid rgb(233, 32, 32);
     }
 
     .form .button {
@@ -65,14 +106,14 @@
 <html>
 
 <body>
-    <div style="width: fit-content; position: relative; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+    <div style="width: fit-content; position: relative; left: 50%; transform: translateX(-50%);">
         <div style="position: relative; display: flex;">
             <table style="position: relative; display: flex;">
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="active"></td>
+                    <td class="notEditable">2</td>
                     <td class="highlight"></td>
                     <td></td>
                     <td></td>
@@ -88,7 +129,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="active"></td>
+                    <td class="notEditable">2</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -117,7 +158,7 @@
                     <td class="highlight"></td>
                     <td class="highlight"></td>
                     <td class="highlight"></td>
-                    <td class="active"></td>
+                    <td class="highlight selectedCell selectedSameNumber">4</td>
                     <td class="highlight"></td>
                     <td class="highlight"></td>
                     <td class="highlight"></td>
@@ -138,7 +179,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td class="notEditable notEditable">9</td>
                     <td class="highlight"></td>
                     <td></td>
                     <td></td>
@@ -147,11 +188,11 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="notSelected">5</td>
+                    <td class="manuallyEnteredNumbers">5</td>
                     <td></td>
                     <td></td>
-                    <td class="highlight">2</td>
-                    <td class="active">4</td>
+                    <td class="notEditable highlight">2</td>
+                    <td class="manuallyEnteredNumbers notEditable selectedSameNumber">4</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -165,7 +206,7 @@
                     <td></td>
                     <td></td>
                     <td class="invalid"></td>
-                    <td class="disabled">7</td>
+                    <td class="notEditable disabled">7</td>
                 </tr>
             </table>
 
@@ -186,28 +227,28 @@
                         </div>
                         <div>
                             <label class="label">
-                                highlight cell:
+                                highlight background:
                             </label>
                             <input type="color" oninput="changeColor()" />
                         </div>
                         <div>
                             <label class="label">
-                                active cell highlight:
+                               default text:
                             </label>
                             <input type="color" oninput="changeColor()" />
                         </div>
                         <div>
                             <label class="label">
-                                text:
+                                selected text:
                             </label>
                             <input type="color" oninput="changeColor()" />
                         </div>
-                        <div>
+                        <!-- <div>
                             <label class="label">
                                 text highlight:
                             </label>
                             <input type="color" oninput="changeColor()" />
-                        </div>
+                        </div> -->
                         <div>
                             <label class="label">
                                 disabled cell:
@@ -236,6 +277,9 @@
                 <input id="get-colors-id" type="text" placeholder="colors in hex values" class="input no-borders-left">
             </div>
         </div>
+
+        <div id="existing-colors-id" style="margin-top: 50px; height: 300px; overflow: auto;">
+        </div>
     </div>
 </body>
 
@@ -243,16 +287,17 @@
 </html>
 
 <script>
-    var background, borders, lightHighlight, highlight, textColor, textHighlightColor, invalid, disable;
+    var background, borders, highlight, defaultTextColor, selectedTextColor, invalid, disable;
+    populateExistingColors();
+    // var background, borders, lightHighlight, highlight, textColor, textHighlightColor, invalid, disable;
     function changeColor() {
         var index = 0;
         var inputs = document.querySelectorAll('#form input');
         background = inputs[index++].value;
         borders = inputs[index++].value;
         highlight = inputs[index++].value;
-        lightHighlight = inputs[index++].value;
-        textColor = inputs[index++].value;
-        textHighlightColor = inputs[index++].value;
+        defaultTextColor = inputs[index++].value;
+        selectedTextColor = inputs[index++].value;
         disable = inputs[index++].value;
         invalid = inputs[index++].value;
         applyColor();
@@ -265,48 +310,65 @@
 
         var highlighedElements = document.getElementsByTagName('td');
         for (let i = 0; i < highlighedElements.length; i++) {
-            highlighedElements[i].style.border = `2px solid ${borders}`;
-            highlighedElements[i].style.color = textColor;
+            highlighedElements[i].style.borderWidth = '2px';
+            highlighedElements[i].style.borderColor = borders;
+            highlighedElements[i].style.color = defaultTextColor;
         }
 
-        var activeElents = document.querySelectorAll('.active');
+        var activeElents = document.querySelectorAll('.manuallyEnteredNumbers');
         for (let i = 0; i < activeElents.length; i++) {
-            activeElents[i].style.backgroundColor = lightHighlight;
-            activeElents[i].style.color = textHighlightColor;
+            activeElents[i].style.color = defaultTextColor;
         }
 
         var highlighedElements = document.querySelectorAll('.highlight');
         for (let i = 0; i < highlighedElements.length; i++) {
             highlighedElements[i].style.backgroundColor = highlight;
-            // highlighedElements[i].style.color = disable;
-            highlighedElements[i].style.color = textColor;
+            highlighedElements[i].style.color = defaultTextColor;
         }
 
-        document.querySelector('.invalid').style.border = `2px solid ${invalid}`;
+        document.querySelector('.invalid').style.border = `4px solid ${invalid}`;
 
-        document.querySelector('.notSelected').style.color = textColor;
+        // document.querySelector('.notSelected').style.color = textColor;
+
+        var notEditableElements = document.querySelectorAll('.notEditable');
+        for (let i = 0; i < notEditableElements.length; i++) {
+            notEditableElements[i].style.color = defaultTextColor;
+            notEditableElements[i].style.fontWeight = 'bold';
+        }
+
+        var activeElents = document.querySelectorAll('.selectedSameNumber');
+        for (let i = 0; i < activeElents.length; i++) {
+            activeElents[i].style.color = selectedTextColor;
+        }
+
+        document.querySelector('.selectedCell').style.border = `4px solid ${borders}`;
 
         var disabledCell = document.querySelector('.disabled');
         disabledCell.style.background = disable;
-        disabledCell.style.color = textHighlightColor;
+        disabledCell.style.color = selectedTextColor;
+        disabledCell.style.border = `2px solid ${disable}`;
     }
 
     function setColors(event) {
-        if (event.type == 'keydown' && event.keyCode != 13) {
+        if (event && event.type == 'keydown' && event.keyCode != 13) {
             return;
         }
 
         document.getElementById('get-colors-id').value = '';
-        var input = document.getElementById('set-colors-id').value.replaceAll('"', '');
+        var inputElement = document.getElementById('set-colors-id');
+        var input = inputElement.value.replaceAll('"', '');
         if (input.trim() == '') {
+            inputElement.classList.add('invalid');
             return;
         }
 
         var colors = input.trim().split(',');
-        if (colors.length < 8) {
+        if (colors.length < 7) {
+            inputElement.classList.add('invalid');
             return;
         }
 
+        inputElement.classList.remove('invalid');
         inputs = document.querySelectorAll('#form input');
         var index = 0;
         inputs[index].value = colors[index++].trim();
@@ -316,7 +378,7 @@
         inputs[index].value = colors[index++].trim();
         inputs[index].value = colors[index++].trim();
         inputs[index].value = colors[index++].trim();
-        inputs[index].value = colors[index++].trim();
+        // inputs[index].value = colors[index++].trim();
         changeColor();
     }
 
@@ -325,15 +387,54 @@
         var index = 0;
         background = inputs[index++].value;
         borders = inputs[index++].value;
-        lightHighlight = inputs[index++].value;
         highlight = inputs[index++].value;
-        textColor = inputs[index++].value;
-        textHighlightColor = inputs[index++].value;
+        defaultTextColor = inputs[index++].value;
+        selectedTextColor = inputs[index++].value;
         disable = inputs[index++].value;
         invalid = inputs[index++].value;
-        var colors = `"${background}", "${borders}", "${lightHighlight}", "${highlight}", "${textColor}", "${textHighlightColor}", "${disable}", "${invalid}"`.toUpperCase();
-        // var colors = `"${background}", "${borders}", "${lightHighlight}", "${highlight}", "${textHighlightColor}", "${disable}", "${invalid}"`.toUpperCase();
+        // var colors = `"${background}", "${borders}", "${lightHighlight}", "${highlight}", "${textColor}", "${textHighlightColor}", "${disable}", "${invalid}"`.toUpperCase();
+        var colors = `"${background}", "${borders}", "${highlight}", "${defaultTextColor}", "${selectedTextColor}", "${disable}", "${invalid}"`.toUpperCase();
         document.getElementById('get-colors-id').value = colors;
         console.log(colors);
     }
+
+    function applyExistingColors(index) {
+        document.getElementById('set-colors-id').value = document.getElementById(`apply-color-${index}`).value;
+        setColors();
+    }
+
+    function populateExistingColors() {
+        var container = document.getElementById('existing-colors-id');
+        var colors = [
+            '"#BFC5C5", "#FFFFFF", "#7F9090", "#000000", "#FFFFFF", "#4D5151", "#ED2626"',
+            '"#000000", "#C9872C", "#CDA574", "#FFFFFF", "#D28314", "#D8DADA", "#ED2626"',
+            '"#000000", "#68826B", "#ABD3AF", "#71B577", "#FFFFFF", "#98A0A0", "#ED2626"',
+            '"#212121", "#DDDDD9", "#A4A4A4", "#FFFAFC", "#E08E00", "#98A0A0", "#ED2626"',
+            '"#001411", "#8BDACE", "#17B59D", "#8BDACE", "#FFFFFF", "#AEA7A7", "#ED2626"',
+            '"#EDDDF3", "#380047", "#F2C9F2", "#D8AFEE", "#FFFFFF", "#4F4A4A", "#FF0000"',
+            '"#0F060D", "#5C2E52", "#E1A8BF", "#C95483", "#FFFFFF", "#919191", "#EB2424"',
+            '"#121212", "#822261", "#D3738B", "#822261", "#FFFFFF", "#4D5151", "#EB2424"',
+            '"#FFFFFF", "#DCA7D1", "#E8C5E1", "#B35B7E", "#8E1A77", "#4D5151", "#6F6F6F"',
+            '"#343232", "#DB811A", "#FFD885", "#C16701", "#FFFFFF", "#4D5151", "#ED2626"',
+            '"#EDE9E9", "#E2A66A", "#EAF3AF", "#6D8E01", "#000000", "#919191", "#ED2626"',
+            '"#EDE9E9", "#9A569F", "#CFB7E6", "#8036C9", "#000000", "#98A0A0", "#FF0000"',
+            '"#121212", "#9A569F", "#CFB7E6", "#854CBD", "#FFFFFF", "#98A0A0", "#FF0000"',
+            '"#1C1C1C", "#273468", "#686F87", "#9DABE1", "#FFFFFF", "#98A0A0", "#FF0000"',
+            '"#010103", "#1C2F40", "#A89867", "#DDCE9C", "#FFFFFF", "#98A0A0", "#FF0000"',
+            '"#010103", "#1C2F40", "#8094A6", "#4C6173", "#FFFFFF", "#98A0A0", "#FF0000"',
+            '"#141414", "#373A3E", "#6B9E9E", "#C5ECEC", "#FFFFFF", "#98A0A0", "#FF0000"',
+            '"#DCC1C1", "#B36161", "#F9F0F0", "#FFEBEB", "#000000", "#98A0A0", "#FF0000"',
+            '"#B3AB98", "#DEBC8C", "#F5E0BC", "#FFCE8A", "#000000", "#98A0A0", "#FF0000"',
+            '"#EDDDF3", "#380047", "#F2C9F2", "#D8AFEE", "#000000", "#98A0A0", "#FF0000"',
+            '"#B5DECB", "#F7DCB6", "#E2E4AA", "#F8FFD6", "#000000", "#98A0A0", "#FF0000"'
+        ];
+        var colorsHtml = colors.map((color, index) => {
+            return `<div class="form" style="position: relative; display: flex;">
+                        <input id="apply-color-${index}" type="text" placeholder="colors in hex values" class="input no-borders-right" value='${color}' disabled">
+                        <button type="button" class="button no-borders-left" onclick="applyExistingColors(${index})">Apply colors</button>
+                    </div>`;
+        });
+        container.insertAdjacentHTML("beforeend", colorsHtml.join(''));
+    }
+
 </script>
