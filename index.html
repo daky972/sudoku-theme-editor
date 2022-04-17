@@ -17,7 +17,7 @@
     table tr:nth-of-type(3n + 1) td {
         border-top-style: solid;
     }
-    
+
     table tr:nth-of-type(3n + 3) td {
         border-bottom-style: solid;
     }
@@ -29,7 +29,7 @@
     table tr td:nth-of-type(3n + 4) {
         border-left-style: solid;
     }
-    
+
 
     table tr td:first-of-type {
         border-left-style: solid;
@@ -42,7 +42,7 @@
     table tr:last-of-type td {
         border-bottom-style: solid;
     }
-    
+
 
     .invalid {
         border: 2px solid inherit;
@@ -102,184 +102,202 @@
         background-color: #6c757d;
         border-color: #6c757d;
     }
+
+    .flex {
+        position: relative;
+        display: flex;
+    }
+
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 <html>
 
 <body>
-    <div style="width: fit-content; position: relative; left: 50%; transform: translateX(-50%);">
-        <div style="position: relative; display: flex;">
-            <table style="position: relative; display: flex;">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="notEditable">2</td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="notEditable">2</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight selectedCell selectedSameNumber">4</td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="notEditable notEditable">9</td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="manuallyEnteredNumbers">5</td>
-                    <td></td>
-                    <td></td>
-                    <td class="notEditable highlight">2</td>
-                    <td class="manuallyEnteredNumbers notEditable selectedSameNumber">4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="highlight"></td>
-                    <td></td>
-                    <td></td>
-                    <td class="invalid"></td>
-                    <td class="notEditable disabled">7</td>
-                </tr>
-            </table>
+    <div class="flex" style="width: fit-content; position: relative; left: 50%; transform: translateX(-50%);">
+        <div class="flex flex-column">
+            <div style="position: relative; display: flex;">
+                <table style="position: relative; display: flex;">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="notEditable">2</td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="notEditable">2</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight selectedCell selectedSameNumber">4</td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="notEditable notEditable">9</td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="manuallyEnteredNumbers">5</td>
+                        <td></td>
+                        <td></td>
+                        <td class="notEditable highlight">2</td>
+                        <td class="manuallyEnteredNumbers notEditable selectedSameNumber">4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="highlight"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="invalid"></td>
+                        <td class="notEditable disabled">7</td>
+                    </tr>
+                </table>
 
-            <div style="position: relative; display: flex; align-items: center; margin-left: 50px;">
-                <form>
-                    <div id="form" style="position: relative; display: block;">
-                        <div>
-                            <label class="label">
-                                background:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
+                <div style="position: relative; display: flex; align-items: center; margin-left: 50px;">
+                    <form>
+                        <div id="form" style="position: relative; display: block;">
+                            <div>
+                                <label class="label">
+                                    background:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <div>
+                                <label class="label">
+                                    border:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <div>
+                                <label class="label">
+                                    highlight background:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <div>
+                                <label class="label">
+                                    default text:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <div>
+                                <label class="label">
+                                    selected text:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <!-- <div>
+                                <label class="label">
+                                    text highlight:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div> -->
+                            <div>
+                                <label class="label">
+                                    disabled cell:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
+                            <div>
+                                <label class="label">
+                                    invalid cell:
+                                </label>
+                                <input type="color" oninput="changeColor()" />
+                            </div>
                         </div>
-                        <div>
-                            <label class="label">
-                                border:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                        <div>
-                            <label class="label">
-                                highlight background:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                        <div>
-                            <label class="label">
-                               default text:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                        <div>
-                            <label class="label">
-                                selected text:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                        <!-- <div>
-                            <label class="label">
-                                text highlight:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div> -->
-                        <div>
-                            <label class="label">
-                                disabled cell:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                        <div>
-                            <label class="label">
-                                invalid cell:
-                            </label>
-                            <input type="color" oninput="changeColor()" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div style="padding-top: 50px;">
-            <div class="form" style="position: relative; display: flex;">
-                <input id="set-colors-id" type="text" placeholder="colors in hex values" class="input no-borders-right" onkeydown="setColors(event)">
-                <button type="button" class="button no-borders-left" onclick="setColors(event)">Set colors</button>
+                    </form>
+                </div>
             </div>
 
-            <div class="form">
-                <button type="button" class="button no-borders-right" onclick="getColors()">Get colors</button>
-                <input id="get-colors-id" type="text" placeholder="colors in hex values" class="input no-borders-left">
+            <div style="padding-top: 50px;">
+                <div class="form" style="position: relative; display: flex;">
+                    <input id="set-colors-id" type="text" placeholder="colors in hex values"
+                        class="input no-borders-right" onkeydown="setColors(event)">
+                    <button type="button" class="button no-borders-left" onclick="setColors(event)">Set colors</button>
+                </div>
+
+                <div class="form">
+                    <button type="button" class="button no-borders-right" onclick="getColors()">Get colors</button>
+                    <input id="get-colors-id" type="text" placeholder="colors in hex values"
+                        class="input no-borders-left">
+                </div>
             </div>
+
         </div>
 
-        <div id="existing-colors-id" style="margin-top: 50px; height: 300px; overflow: auto;">
+        <div class="flex">
+            <div id="existing-colors-id" style="margin-left: 50px; height: 90vh; overflow: auto;min-width: 300px;width: 500px;">
+            </div>
         </div>
+        
     </div>
 </body>
 
